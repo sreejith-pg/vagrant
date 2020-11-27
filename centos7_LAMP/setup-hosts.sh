@@ -54,7 +54,7 @@ cp -pr /root/.ssh /home/sweta;
 chown -R sweta:sweta /home/sweta;
 
 # Update packages
-#yum update -y;
+yum update -y;
 
 # Install packages
 yum install -y vim net-tools bind-utils yum-utils epel-release;
