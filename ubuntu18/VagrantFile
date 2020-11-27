@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi:set ft=ruby sw=2 ts=2 sts=2:
+
+# Define the number of master and worker nodes
+# If this number is changed, remember to update setup-hosts.sh script with the new hosts IP details in /etc/hosts of each VM.
+NUM_NODE = 3
+
+IP_NW = "192.168.54."
+NODE_IP_START = 40
+
+Vagrant.configure("2") do |config|
+	config.vm.box = "ubuntu/bionic64"
+	config.vm.box_check_update = false
+	# Provision Master Nodes
+  (1..NUM_NODE).each do |i|
+      config.vm.define "ubu18srv#{i}" do |node|
+        # Name shown in the GUI
+        node.vm.provider "virtualbox" do |vb|
+            vb.name = "ubu18srv#{i}"
+            vb.memory = 1024
+            vb.cpus = 1
+        end
+        node.vm.hostname = "ubu18srv#{i}"
+        node.vm.network :private_network, ip: IP_NW + "#{NODE_IP_START + i}"
+        node.vm.network "forwarded_port", guest: 22, host: "#{2720 + i}"
+        node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh"
+        node.vm.provision "setup-dns", type: "shell", :path => "update-dns.sh"
+    end
+  end
+end

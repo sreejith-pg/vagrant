@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi:set ft=ruby sw=2 ts=2 sts=2:
+
+# Define the number of master and worker nodes
+# If this number is changed, remember to update setup-hosts.sh script with the new hosts IP details in /etc/hosts of each VM.
+NUM_NODE = 4
+IP_NW = "192.168.54."
+NODE_IP_START = 10
+Vagrant.configure("2") do |config|
+	config.vm.box = "centos/7"
+	config.vm.box_check_update = false
+  	(1..NUM_NODE).each do |i|
+      		config.vm.define "cent7srv#{i}" do |node|
+        		node.vm.provider "virtualbox" do |vb|
+            			vb.name = "cent7srv#{i}"
+            			vb.memory = 1024
+            			vb.cpus = 1
+        		end
+        		node.vm.hostname = "cent7srv#{i}"
+        		node.vm.network :private_network, ip: IP_NW + "#{NODE_IP_START + i}"
+        		node.vm.network "forwarded_port", guest: 22, host: "#{2710 + i}"
+        		node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh" do |s|
+          			s.args = ["eth1"]
+        		end
+    		end
+  	end
+end
