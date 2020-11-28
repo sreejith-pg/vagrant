@@ -36,22 +36,22 @@ sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'  /etc/ssh/sshd
 /bin/systemctl restart sshd
 
 # Add user
-/usr/sbin/useradd -u 1010 -G 10 -d /home/sweta -s /bin/bash sweta
-password="sweta";
+/usr/sbin/useradd -u 1010 -G 10 -d /home/sreejith -s /bin/bash sreejith
+password="sreejith";
 groupadd -g 200 sysadmin;
 echo "%sysadmin   ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers;
-usermod -aG 200 sweta;
+usermod -aG 200 sreejith;
 
-echo "sweta:sweta" | sudo chpasswd;
+echo "sreejith:sreejith" | sudo chpasswd;
 
 # Set root password
-echo "root:sweta" | sudo chpasswd;
+echo "root:sreejith" | sudo chpasswd;
 
 # Passwordless Keys
 echo | ssh-keygen -P '';
 touch /root/.ssh/authorized_keys; chmod 700 /root/.ssh; chmod 600 /root/.ssh/authorized_keys;
-cp -pr /root/.ssh /home/sweta;
-chown -R sweta:sweta /home/sweta;
+cp -pr /root/.ssh /home/sreejith;
+chown -R sreejith:sreejith /home/sreejith;
 
 # Update packages
 yum update -y;
