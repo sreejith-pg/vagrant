@@ -127,4 +127,5 @@ then
 	echo "source <(kubectl completion bash)" >> ~/.bashrc;
 	curl https://docs.projectcalico.org/manifests/calico.yaml -O;
 	kubectl apply -f calico.yaml;
+  cp -pr /root/.kube /home/sreejith/;
 fi
