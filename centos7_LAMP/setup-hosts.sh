@@ -58,7 +58,7 @@ chown -R sreejith:sreejith /home/sreejith;
 yum update -y;
 
 # Install packages
-yum install -y vim net-tools bind-utils yum-utils epel-release;
+yum install -y vim net-tools bind-utils yum-utils epel-release git;
 
 # Configure Docker Repository
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo;

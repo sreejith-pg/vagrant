@@ -58,4 +58,4 @@ chown -R sreejith:sreejith /home/sreejith;
 yum update -y;
 
 # Install packages
-yum install -y vim net-tools bind-utils;
+yum install -y vim net-tools bind-utils git;
