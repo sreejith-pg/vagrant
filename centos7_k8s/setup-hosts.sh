@@ -6,33 +6,33 @@ sed -e "s/^.*${HOSTNAME}.*/${ADDRESS} ${HOSTNAME} ${HOSTNAME}.local/" -i /etc/ho
 
 # Add Lab hosts
 cat <<EOT >> /etc/hosts
-192.168.54.11   cent7srv1
-192.168.54.12   cent7srv2
-192.168.54.13   cent7srv3
-192.168.54.14   cent7srv4
-192.168.54.15   cent7srv5
+192.168.56.11   cent7srv1
+192.168.56.12   cent7srv2
+192.168.56.13   cent7srv3
+192.168.56.14   cent7srv4
+192.168.56.15   cent7srv5
 
-192.168.54.21   k8snode1
-192.168.54.22   k8snode2 
-192.168.54.23   k8smaster1
+192.168.56.21   k8snode1
+192.168.56.22   k8snode2 
+192.168.56.23   k8smaster1
 
-192.168.54.31   cent8srv1
-192.168.54.32   cent8srv2
-192.168.54.33   cent8srv3
-192.168.54.34   cent8srv4
-192.168.54.35   cent8srv5
+192.168.56.31   cent8srv1
+192.168.56.32   cent8srv2
+192.168.56.33   cent8srv3
+192.168.56.34   cent8srv4
+192.168.56.35   cent8srv5
 
-192.168.54.21   ubu16srv1
-192.168.54.22   ubu16srv2
-192.168.54.23   ubu16srv3
-192.168.54.24   ubu16srv4
-192.168.54.25   ubu16srv5
+192.168.56.21   ubu16srv1
+192.168.56.22   ubu16srv2
+192.168.56.23   ubu16srv3
+192.168.56.24   ubu16srv4
+192.168.56.25   ubu16srv5
 
-192.168.54.41   ubu18srv1
-192.168.54.42   ubu18srv2
-192.168.54.43   ubu18srv3
-192.168.54.44   ubu18srv4
-192.168.54.45   ubu18srv5
+192.168.56.41   ubu18srv1
+192.168.56.42   ubu18srv2
+192.168.56.43   ubu18srv3
+192.168.56.44   ubu18srv4
+192.168.56.45   ubu18srv5
 EOT
 
 # Allow password authentication in SSH
@@ -117,18 +117,18 @@ systemctl restart kubelet;
 swapoff -a;
 sed -i '/swap/d' /etc/fstab;
 
-echo "k8smaster1,192.168.54.23 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOV+58IuPTZ/Jv9zuIx7L3geKOEpmI0i8QxL0LTOgYrlP/19h2aIPZpNzZtGsVA6FCEMnfw8VxVxhCL+/8zWF0E=" > /root/known_hosts;
-echo "k8snode1,192.168.54.21 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLfDvky8Qa+OLob1W1wX12mLUrzhCjv/xBYx6wOeZwcVE8ExTrRWE2Zw2vKj2pgDs3PvTGg/blwgKfN16JgdQh0=" >> /root/known_hosts;
-echo "k8snode2,192.168.54.22 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDp+LkFhs4gnjCfRiigt9Pk8VvQzjXT2AyYT+i3O48sfBlZg9bKlNQhWiiXQJ/A+niybqqekmcmft1lRs1J0Wp4=" >> /root/known_hosts;
+echo "k8smaster1,192.168.56.23 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOV+58IuPTZ/Jv9zuIx7L3geKOEpmI0i8QxL0LTOgYrlP/19h2aIPZpNzZtGsVA6FCEMnfw8VxVxhCL+/8zWF0E=" > /root/known_hosts;
+echo "k8snode1,192.168.56.21 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLfDvky8Qa+OLob1W1wX12mLUrzhCjv/xBYx6wOeZwcVE8ExTrRWE2Zw2vKj2pgDs3PvTGg/blwgKfN16JgdQh0=" >> /root/known_hosts;
+echo "k8snode2,192.168.56.22 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDp+LkFhs4gnjCfRiigt9Pk8VvQzjXT2AyYT+i3O48sfBlZg9bKlNQhWiiXQJ/A+niybqqekmcmft1lRs1J0Wp4=" >> /root/known_hosts;
 
 
 # K8S Master
-if [ `/sbin/ifconfig -a | grep "192.168.54" | awk '{print $2}'` == "192.168.54.23" ]
+if [ `/sbin/ifconfig -a | grep "192.168.56" | awk '{print $2}'` == "192.168.56.23" ]
 then
   echo "=====================================================================" > /root/kubernetes_commands;
 	echo "Execute below command starting with \"kubeadm join\" in worker nodes" >> /root/kubernetes_commands;
 	echo "=====================================================================" >> /root/kubernetes_commands;
-	kubeadm init --apiserver-advertise-address=192.168.54.23 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
+	kubeadm init --apiserver-advertise-address=192.168.56.23 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
 	mkdir -p $HOME/.kube;
 	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config;
 	sudo chown $(id -u):$(id -g) $HOME/.kube/config;
