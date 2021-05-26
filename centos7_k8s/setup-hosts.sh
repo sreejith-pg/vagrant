@@ -12,6 +12,10 @@ cat <<EOT >> /etc/hosts
 192.168.54.14   cent7srv4
 192.168.54.15   cent7srv5
 
+192.168.54.21   k8snode1
+192.168.54.22   k8snode2 
+192.168.54.23   k8smaster1
+
 192.168.54.31   cent8srv1
 192.168.54.32   cent8srv2
 192.168.54.33   cent8srv3
@@ -58,7 +62,7 @@ chown -R sreejith:sreejith /home/sreejith;
 yum update -y;
 
 # Install packages
-yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git;
+yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass;
 
 # Configure Docker Repository
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo;
@@ -113,8 +117,13 @@ systemctl restart kubelet;
 swapoff -a;
 sed -i '/swap/d' /etc/fstab;
 
+echo "k8smaster1,192.168.54.23 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOV+58IuPTZ/Jv9zuIx7L3geKOEpmI0i8QxL0LTOgYrlP/19h2aIPZpNzZtGsVA6FCEMnfw8VxVxhCL+/8zWF0E=" > /root/known_hosts;
+echo "k8snode1,192.168.54.21 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLfDvky8Qa+OLob1W1wX12mLUrzhCjv/xBYx6wOeZwcVE8ExTrRWE2Zw2vKj2pgDs3PvTGg/blwgKfN16JgdQh0=" >> /root/known_hosts;
+echo "k8snode2,192.168.54.22 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDp+LkFhs4gnjCfRiigt9Pk8VvQzjXT2AyYT+i3O48sfBlZg9bKlNQhWiiXQJ/A+niybqqekmcmft1lRs1J0Wp4=" >> /root/known_hosts;
+
+
 # K8S Master
-if [ `/sbin/ifconfig -a | grep "192.168.54" | awk '{print $2}'` == "192.168.54.11" ]
+if [ `/sbin/ifconfig -a | grep "192.168.54" | awk '{print $2}'` == "192.168.54.23" ]
 then
 	echo "=====================================================================" > /root/kubernetes_commands;
 	echo "Execute below command starting with \"kubeadm join\" in worker nodes" >> /root/kubernetes_commands;
@@ -128,4 +137,14 @@ then
 	curl https://docs.projectcalico.org/manifests/calico.yaml -O;
 	kubectl apply -f calico.yaml;
   cp -pr /root/.kube /home/sreejith/;
+  cat /root/kubernetes_commands | tail -2 > /root/kube_join.sh;
+  chmod 755 /root/kube_join.sh;
+  #sshpass -p sreejith scp /root/.ssh/id_rsa.pub root@k8snode1:/tmp/;
+  #sshpass -p sreejith scp /root/kube_join.sh root@k8snode1:/tmp/;
+  #sshpass -p sreejith ssh root@k8snode1 "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys; rm -rf /tmp/id_rsa.pub";
+  sshpass -p sreejith ssh root@k8snode1 "/bin/bash /tmp/kube_join.sh";
+  #sshpass -p sreejith scp /root/.ssh/id_rsa.pub root@k8snode2:/tmp/;
+  #sshpass -p sreejith scp /root/kube_join.sh root@k8snode2:/tmp/; 
+  #sshpass -p sreejith ssh root@k8snode2 "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys; rm -rf /tmp/id_rsa.pub";
+  sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
 fi
