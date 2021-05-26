@@ -125,10 +125,10 @@ echo "k8snode2,192.168.54.22 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTY
 # K8S Master
 if [ `/sbin/ifconfig -a | grep "192.168.54" | awk '{print $2}'` == "192.168.54.23" ]
 then
-	echo "=====================================================================" > /root/kubernetes_commands;
+  echo "=====================================================================" > /root/kubernetes_commands;
 	echo "Execute below command starting with \"kubeadm join\" in worker nodes" >> /root/kubernetes_commands;
 	echo "=====================================================================" >> /root/kubernetes_commands;
-	kubeadm init --apiserver-advertise-address=192.168.54.11 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
+	kubeadm init --apiserver-advertise-address=192.168.54.23 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
 	mkdir -p $HOME/.kube;
 	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config;
 	sudo chown $(id -u):$(id -g) $HOME/.kube/config;
@@ -140,11 +140,11 @@ then
   cat /root/kubernetes_commands | tail -2 > /root/kube_join.sh;
   chmod 755 /root/kube_join.sh;
   #sshpass -p sreejith scp /root/.ssh/id_rsa.pub root@k8snode1:/tmp/;
-  #sshpass -p sreejith scp /root/kube_join.sh root@k8snode1:/tmp/;
+  sshpass -p sreejith scp /root/kube_join.sh root@k8snode1:/tmp/;
   #sshpass -p sreejith ssh root@k8snode1 "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys; rm -rf /tmp/id_rsa.pub";
   sshpass -p sreejith ssh root@k8snode1 "/bin/bash /tmp/kube_join.sh";
   #sshpass -p sreejith scp /root/.ssh/id_rsa.pub root@k8snode2:/tmp/;
-  #sshpass -p sreejith scp /root/kube_join.sh root@k8snode2:/tmp/; 
+  sshpass -p sreejith scp /root/kube_join.sh root@k8snode2:/tmp/; 
   #sshpass -p sreejith ssh root@k8snode2 "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys; rm -rf /tmp/id_rsa.pub";
   sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
 fi
