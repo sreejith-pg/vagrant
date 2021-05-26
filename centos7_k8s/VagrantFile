@@ -10,7 +10,7 @@ NODE_IP_START = 20
 Vagrant.configure("2") do |config|
 	config.vm.box = "centos/7"
 	config.vm.box_check_update = false
-	(2..NUM_NODE).each do |i|
+	(1..NUM_NODE).each do |i|
 		config.vm.define "k8snode#{i}" do |node|
 			node.vm.provider "virtualbox" do |vb|
 				vb.name = "k8snode#{i}"
