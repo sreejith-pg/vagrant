@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
 			end
 			node.vm.hostname = "k8snode#{i}"
 			node.vm.network :private_network, ip: IP_NW + "#{NODE_IP_START + i}"
-			node.vm.network "forwarded_port", guest: 22, host: "#{2710 + i}"
+			node.vm.network "forwarded_port", guest: 22, host: "#{2720 + i}"
 			node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh" do |s|
 				s.args = ["eth1"]
 			end
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
     	end
 	node.vm.hostname = "k8smaster1"
     	node.vm.network :private_network, ip: IP_NW + "23"
-    	node.vm.network "forwarded_port", guest: 22, host: "#{2711}"
+    	node.vm.network "forwarded_port", guest: 22, host: "#{2723}"
     	node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh" do |s|
 		s.args = ["eth1"]
 	end

@@ -59,7 +59,7 @@ cp -pr /root/.ssh /home/sreejith;
 chown -R sreejith:sreejith /home/sreejith;
 
 # Update packages
-yum update -y;
+#yum update -y;
 
 # Install packages
 yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass;
