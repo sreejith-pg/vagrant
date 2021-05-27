@@ -9,29 +9,33 @@ sed -e '/^.*ubuntu-bionic.*/d' -i /etc/hosts
 
 # Add Lab hosts
 cat <<EOT >> /etc/hosts
-192.168.54.11   cent7srv1
-192.168.54.12   cent7srv2
-192.168.54.13   cent7srv3
-192.168.54.14   cent7srv4
-192.168.54.15   cent7srv5
+192.168.56.11   cent7srv1
+192.168.56.12   cent7srv2
+192.168.56.13   cent7srv3
+192.168.56.14   cent7srv4
+192.168.56.15   cent7srv5
 
-192.168.54.31   cent8srv1
-192.168.54.32   cent8srv2
-192.168.54.33   cent8srv3
-192.168.54.34   cent8srv4
-192.168.54.35   cent8srv5
+192.168.56.21   k8snode1
+192.168.56.22   k8snode2 
+192.168.56.23   k8smaster1
 
-192.168.54.21   ubu16srv1
-192.168.54.22   ubu16srv2
-192.168.54.23   ubu16srv3
-192.168.54.24   ubu16srv4
-192.168.54.25   ubu16srv5
+192.168.56.31   cent8srv1
+192.168.56.32   cent8srv2
+192.168.56.33   cent8srv3
+192.168.56.34   cent8srv4
+192.168.56.35   cent8srv5
 
-192.168.54.41   ubu18srv1
-192.168.54.42   ubu18srv2
-192.168.54.43   ubu18srv3
-192.168.54.44   ubu18srv4
-192.168.54.45   ubu18srv5
+192.168.56.21   ubu16srv1
+192.168.56.22   ubu16srv2
+192.168.56.23   ubu16srv3
+192.168.56.24   ubu16srv4
+192.168.56.25   ubu16srv5
+
+192.168.56.41   ubu18srv1
+192.168.56.42   ubu18srv2
+192.168.56.43   ubu18srv3
+192.168.56.44   ubu18srv4
+192.168.56.45   ubu18srv5
 EOT
 
 # Allow password authentication in SSH
