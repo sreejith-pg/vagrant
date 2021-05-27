@@ -140,11 +140,11 @@ then
   cat /root/kubernetes_commands | tail -2 > /root/kube_join.sh;
   chmod 755 /root/kube_join.sh;
   #sshpass -p sreejith scp /root/.ssh/id_rsa.pub root@k8snode1:/tmp/;
-  sshpass -p sreejith scp /root/kube_join.sh root@k8snode1:/tmp/;
+  sshpass -p sreejith scp -o "StrictHostKeyChecking no" /root/kube_join.sh root@k8snode1:/tmp/;
   #sshpass -p sreejith ssh root@k8snode1 "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys; rm -rf /tmp/id_rsa.pub";
   sshpass -p sreejith ssh root@k8snode1 "/bin/bash /tmp/kube_join.sh";
   #sshpass -p sreejith scp /root/.ssh/id_rsa.pub root@k8snode2:/tmp/;
-  sshpass -p sreejith scp /root/kube_join.sh root@k8snode2:/tmp/; 
+  sshpass -p sreejith scp -o "StrictHostKeyChecking no" /root/kube_join.sh root@k8snode2:/tmp/; 
   #sshpass -p sreejith ssh root@k8snode2 "cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys; rm -rf /tmp/id_rsa.pub";
   sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
 fi
