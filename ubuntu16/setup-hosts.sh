@@ -25,17 +25,17 @@ cat <<EOT >> /etc/hosts
 192.168.56.34   cent8srv4
 192.168.56.35   cent8srv5
 
-192.168.56.21   ubu16srv1
-192.168.56.22   ubu16srv2
-192.168.56.23   ubu16srv3
-192.168.56.24   ubu16srv4
-192.168.56.25   ubu16srv5
+192.168.56.41   ubu16srv1
+192.168.56.42   ubu16srv2
+192.168.56.43   ubu16srv3
+192.168.56.44   ubu16srv4
+192.168.56.45   ubu16srv5
 
-192.168.56.41   ubu18srv1
-192.168.56.42   ubu18srv2
-192.168.56.43   ubu18srv3
-192.168.56.44   ubu18srv4
-192.168.56.45   ubu18srv5
+192.168.56.51   ubu18srv1
+192.168.56.52   ubu18srv2
+192.168.56.53   ubu18srv3
+192.168.56.54   ubu18srv4
+192.168.56.55   ubu18srv5
 EOT
 
 # Allow password authentication in SSH
