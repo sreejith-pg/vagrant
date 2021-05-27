@@ -117,11 +117,6 @@ systemctl restart kubelet;
 swapoff -a;
 sed -i '/swap/d' /etc/fstab;
 
-echo "k8smaster1,192.168.56.23 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOV+58IuPTZ/Jv9zuIx7L3geKOEpmI0i8QxL0LTOgYrlP/19h2aIPZpNzZtGsVA6FCEMnfw8VxVxhCL+/8zWF0E=" > /root/.ssh/known_hosts;
-echo "k8snode1,192.168.56.21 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLfDvky8Qa+OLob1W1wX12mLUrzhCjv/xBYx6wOeZwcVE8ExTrRWE2Zw2vKj2pgDs3PvTGg/blwgKfN16JgdQh0=" >> /root/.ssh/known_hosts;
-echo "k8snode2,192.168.56.22 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDp+LkFhs4gnjCfRiigt9Pk8VvQzjXT2AyYT+i3O48sfBlZg9bKlNQhWiiXQJ/A+niybqqekmcmft1lRs1J0Wp4=" >> /root/.ssh/known_hosts;
-
-
 # K8S Master
 if [ `/sbin/ifconfig -a | grep "192.168.56" | awk '{print $2}'` == "192.168.56.23" ]
 then
