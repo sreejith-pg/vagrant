@@ -141,4 +141,6 @@ then
   su - sreejith;
   source <(kubectl completion bash);
   echo "source <(kubectl completion bash)" >> ~/.bashrc;
+  sleep 60;
+  kubectl create -f nginx-ingress-controller.yaml;
 fi
