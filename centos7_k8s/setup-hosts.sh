@@ -142,5 +142,6 @@ then
   source <(kubectl completion bash);
   echo "source <(kubectl completion bash)" >> ~/.bashrc;
   sleep 60;
-  kubectl create -f nginx-ingress-controller.yaml;
+  kubectl create -f /vagrant/nginx-ingress-controller.yaml;
+  userdel -r vagrant;
 fi
