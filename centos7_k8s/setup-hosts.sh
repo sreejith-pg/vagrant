@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
-IFNAME=$1
-ADDRESS="$(ip -4 addr show $IFNAME | grep "inet" | head -1 |awk '{print $2}' | cut -d/ -f1)"
-sed -e "s/^.*${HOSTNAME}.*/${ADDRESS} ${HOSTNAME} ${HOSTNAME}.local/" -i /etc/hosts
+IFNAME=$1;
+ADDRESS="$(ip -4 addr show $IFNAME | grep "inet" | head -1 |awk '{print $2}' | cut -d/ -f1)";
+sed -e "s/^.*${HOSTNAME}.*/${ADDRESS} ${HOSTNAME} ${HOSTNAME}.local/" -i /etc/hosts;
 
 # Add Lab hosts
 cat <<EOT >> /etc/hosts
@@ -36,11 +36,11 @@ cat <<EOT >> /etc/hosts
 EOT
 
 # Allow password authentication in SSH
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'  /etc/ssh/sshd_config
-/bin/systemctl restart sshd
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'  /etc/ssh/sshd_config;
+/bin/systemctl restart sshd;
 
 # Add user
-/usr/sbin/useradd -u 1010 -G 10 -d /home/sreejith -s /bin/bash sreejith
+/usr/sbin/useradd -u 1010 -G 10 -d /home/sreejith -s /bin/bash sreejith;
 password="sreejith";
 groupadd -g 200 sysadmin;
 echo "%sysadmin   ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers;
