@@ -20,7 +20,6 @@ Vagrant.configure("2") do |config|
 			node.vm.hostname = "k8snode#{i}"
 			node.vm.network :private_network, ip: IP_NW + "#{NODE_IP_START + i}"
 			node.vm.network "forwarded_port", guest: 22, host: "#{2720 + i}"
-			config.vm.provision "file", source: "nginx-ingress-controller.yaml", destination: "/tmp"
 			node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh" do |s|
 				s.args = ["eth1"]
 			end
@@ -40,10 +39,11 @@ Vagrant.configure("2") do |config|
 	node.vm.hostname = "k8smaster1"
     	node.vm.network :private_network, ip: IP_NW + "23"
     	node.vm.network "forwarded_port", guest: 22, host: "#{2723}"
+	config.vm.provision "file", source: "nginx-ingress-controller.yaml", destination: "$HOME"
     	node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh" do |s|
 		s.args = ["eth1"]
 	end	  
   end
-  config.vm.provision "file", source: "nginx-ingress-controller.yaml", destination: "$HOME"
+  
 end
 
