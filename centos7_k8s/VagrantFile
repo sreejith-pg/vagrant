@@ -25,6 +25,7 @@ Vagrant.configure("2") do |config|
 			end
 		end
 	end
+	config.vm.provision "file", source: "~/nginx-ingress-controller.yaml", destination: "$HOME"
 end
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
