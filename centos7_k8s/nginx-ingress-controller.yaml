@@ -317,7 +317,7 @@ spec:
         app.kubernetes.io/instance: ingress-nginx
         app.kubernetes.io/component: controller
     spec:
-      hostNetwork: true
+      hostNetwork: true # Required for Oracle VirtualBox setup
       dnsPolicy: ClusterFirst
       containers:
         - name: controller
@@ -598,7 +598,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
       restartPolicy: OnFailure
-      hostNetwork: true
+      hostNetwork: true # Required for Oracle VirtualBox setup
       serviceAccountName: ingress-nginx-admission
       securityContext:
         runAsNonRoot: true
@@ -649,7 +649,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
       restartPolicy: OnFailure
-      hostNetwork: true
+      hostNetwork: true # Required for Oracle VirtualBox setup
       serviceAccountName: ingress-nginx-admission
       securityContext:
         runAsNonRoot: true
