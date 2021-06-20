@@ -138,10 +138,10 @@ then
   sshpass -p sreejith ssh root@k8snode1 "/bin/bash /tmp/kube_join.sh";
   sshpass -p sreejith scp -o "StrictHostKeyChecking no" /root/kube_join.sh root@k8snode2:/tmp/; 
   sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
-  su - sreejith;
-  source <(kubectl completion bash);
-  echo "source <(kubectl completion bash)" >> ~/.bashrc;
   sleep 60;
   kubectl create -f /vagrant/nginx-ingress-controller.yaml;
   userdel -r vagrant;
+  su - sreejith;
+  source <(kubectl completion bash);
+  echo "source <(kubectl completion bash)" >> ~/.bashrc;
 fi
