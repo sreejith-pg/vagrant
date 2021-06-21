@@ -1,8 +1,5 @@
 #!/bin/bash
 set -e
-IFNAME=$1;
-ADDRESS="$(ip -4 addr show $IFNAME | grep "inet" | head -1 |awk '{print $2}' | cut -d/ -f1)";
-sed -e "s/^.*${HOSTNAME}.*/${ADDRESS} ${HOSTNAME} ${HOSTNAME}.local/" -i /etc/hosts;
 
 # Add Lab hosts
 cat <<EOT >> /etc/hosts
@@ -62,13 +59,13 @@ chown -R sreejith:sreejith /home/sreejith;
 yum update -y;
 
 # Install packages
-yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass;
+yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass telnet;
 
 # Configure Docker Repository
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo;
 
 # Install Docker packages
-yum update -y && yum install -y containerd.io-1.2.13 docker-ce-19.03.11 docker-ce-cli-19.03.11;
+yum update -y &&  yum install -y docker-ce docker-ce-cli containerd.io;
 
 # Docker Config files
 mkdir /etc/docker;
@@ -85,6 +82,7 @@ cat > /etc/docker/daemon.json <<EOF
     ]
   }
 EOF
+
 mkdir -p /etc/systemd/system/docker.service.d;
 systemctl daemon-reload;
 systemctl restart docker;
