@@ -42,7 +42,6 @@ password="sreejith";
 groupadd -g 200 sysadmin;
 echo "%sysadmin   ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers;
 usermod -aG 200 sreejith;
-
 echo "sreejith:sreejith" | sudo chpasswd;
 
 # Set root password
