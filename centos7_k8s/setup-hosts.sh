@@ -129,6 +129,7 @@ then
   curl https://docs.projectcalico.org/manifests/calico.yaml -O;
   kubectl apply -f calico.yaml;
   cp -pr /root/.kube /home/sreejith/;
+  chown -R sreejith:sreejith /home/sreejith;
   cat /root/kubernetes_commands | tail -2 > /root/kube_join.sh;
   chmod 755 /root/kube_join.sh;
   sshpass -p sreejith scp -o "StrictHostKeyChecking no" /root/kube_join.sh root@k8snode1:/tmp/;
