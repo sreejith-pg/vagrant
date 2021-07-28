@@ -138,7 +138,6 @@ then
   sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
   sleep 60;
   kubectl create -f /vagrant/nginx-ingress-controller.yaml;
-  su - sreejith;
-  source <(kubectl completion bash);
-  echo "source <(kubectl completion bash)" >> ~/.bashrc;
+  echo "source <(kubectl completion bash)" >> ~/home/sreejith/.bashrc;
+  chown -R sreejith:sreejith /home/sreejith;
 fi
