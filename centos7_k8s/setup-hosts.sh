@@ -58,7 +58,7 @@ chown -R sreejith:sreejith /home/sreejith;
 yum update -y;
 
 # Install packages
-yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass telnet;
+yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass telnet curl;
 
 # Configure Docker Repository
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo;
@@ -137,7 +137,10 @@ then
   sshpass -p sreejith scp -o "StrictHostKeyChecking no" /root/kube_join.sh root@k8snode2:/tmp/; 
   sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
   sleep 60;
-  kubectl create -f /vagrant/nginx-ingress-controller.yaml;
+  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+  chmod 700 get_helm.sh;
+  ./get_helm.sh;
+  /usr/local/bin/helm install haproxy haproxytech/kubernetes-ingress -n haproxy-ingress --create-namespace --set controller.kind=DaemonSet --set controller.daemonset.useHostPort=true;
   echo "source <(kubectl completion bash)" >> /home/sreejith/.bashrc;
   chown -R sreejith:sreejith /home/sreejith;
 fi
