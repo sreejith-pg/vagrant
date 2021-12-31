@@ -137,7 +137,7 @@ then
   sshpass -p sreejith scp -o "StrictHostKeyChecking no" /root/kube_join.sh root@k8snode2:/tmp/; 
   sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
   sleep 60;
-  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3;
   chmod 700 get_helm.sh;
   ./get_helm.sh;
   /usr/local/bin/helm install haproxy haproxytech/kubernetes-ingress -n haproxy-ingress --create-namespace --set controller.kind=DaemonSet --set controller.daemonset.useHostPort=true;
