@@ -140,7 +140,7 @@ then
   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3;
   chmod 700 get_helm.sh;
   ./get_helm.sh;
-  /usr/local/bin/helm install haproxy haproxytech/kubernetes-ingress -n haproxy-ingress --create-namespace --set controller.kind=DaemonSet --set controller.daemonset.useHostPort=true;
+  #/usr/local/bin/helm install haproxy haproxytech/kubernetes-ingress -n haproxy-ingress --create-namespace --set controller.kind=DaemonSet --set controller.daemonset.useHostPort=true;
   echo "source <(kubectl completion bash)" >> /home/sreejith/.bashrc;
   chown -R sreejith:sreejith /home/sreejith;
 fi
