@@ -123,7 +123,7 @@ then
   echo "Execute below command starting with \"kubeadm join\" in worker nodes" >> /root/kubernetes_commands;
   echo "=====================================================================" >> /root/kubernetes_commands;
  # kubeadm init --apiserver-advertise-address=192.168.56.23 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
-  kubeadm init --apiserver-advertise-address=192.168.56.23 >> /root/kubernetes_commands;
+  kubeadm init --apiserver-advertise-address=192.168.56.23 --pod-network-cidr=172.16.0.1/16 >> /root/kubernetes_commands;
   mkdir -p $HOME/.kube;
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config;
   sudo chown $(id -u):$(id -g) $HOME/.kube/config;
