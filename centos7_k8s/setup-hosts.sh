@@ -143,8 +143,6 @@ then
   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3;
   chmod 700 get_helm.sh;
   ./get_helm.sh;
-  echo "export PATH=\"/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/bin\"" >> /root/.bashrc;
-  source /root/.bashrc;
   /usr/local/bin/helm repo add haproxytech https://haproxytech.github.io/helm-charts;
   /usr/local/bin/helm repo update;
   /usr/local/bin/helm install haproxy-ingress haproxytech/kubernetes-ingress --create-namespace --namespace ingress-controller;
