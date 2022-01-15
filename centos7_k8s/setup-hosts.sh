@@ -120,7 +120,8 @@ then
   echo "=====================================================================" > /root/kubernetes_commands;
   echo "Execute below command starting with \"kubeadm join\" in worker nodes" >> /root/kubernetes_commands;
   echo "=====================================================================" >> /root/kubernetes_commands;
-  kubeadm init --apiserver-advertise-address=192.168.56.23 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
+ # kubeadm init --apiserver-advertise-address=192.168.56.23 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
+  kubeadm init --apiserver-advertise-address=192.168.56.23 >> /root/kubernetes_commands;
   mkdir -p $HOME/.kube;
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config;
   sudo chown $(id -u):$(id -g) $HOME/.kube/config;
@@ -140,6 +141,8 @@ then
   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3;
   chmod 700 get_helm.sh;
   ./get_helm.sh;
+  echo "export PATH="/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/bin"" >> /root/.bashrc;
+  source /root/.bashrc;
   #/usr/local/bin/helm install haproxy haproxytech/kubernetes-ingress -n haproxy-ingress --create-namespace --set controller.kind=DaemonSet --set controller.daemonset.useHostPort=true;
   echo "source <(kubectl completion bash)" >> /home/sreejith/.bashrc;
   chown -R sreejith:sreejith /home/sreejith;
