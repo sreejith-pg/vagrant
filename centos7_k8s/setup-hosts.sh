@@ -146,7 +146,7 @@ then
   /bin/sh get_helm.sh;
   /usr/local/bin/helm repo add haproxytech https://haproxytech.github.io/helm-charts;
   /usr/local/bin/helm repo update;
-  /usr/local/bin/helm install haproxy-ingress haproxytech/kubernetes-ingress --create-namespace --namespace ingress-controller;
+  /usr/local/bin/helm install haproxy-ingress haproxytech/kubernetes-ingress --create-namespace --namespace ingress-controller --set controller.service.nodePorts.http=30080 --set controller.service.nodePorts.https=30443 --set controller.service.nodePorts.stat=30000;
   echo "source <(kubectl completion bash)" >> /home/sreejith/.bashrc;
   chown -R sreejith:sreejith /home/sreejith;
 fi
