@@ -140,6 +140,7 @@ then
   sshpass -p sreejith scp -o "StrictHostKeyChecking no" /root/kube_join.sh root@k8snode2:/tmp/; 
   sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
   sleep 60;
+  export PATH="/usr/local/bin:$PATH";
   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3;
   chmod 700 get_helm.sh;
   /bin/sh get_helm.sh;
