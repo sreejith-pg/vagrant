@@ -153,10 +153,10 @@ then
   # Install haproxy load balancer
   yum install -y haproxy;
   mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg-`date +%Y%m%d`; 
-  mv haproxy.cfg /etc/haproxy/haproxy.cfg;
+  mv /root/haproxy.cfg /etc/haproxy/haproxy.cfg;
   systemctl enable --now haproxy;
 
-  # Create dummy YAML files
-  mkdir /root/yml;
-  mv app.yml /root/yml/;
+  # Create dummy YAML files for example.com ingress
+  mkdir /root/yaml;
+  mv /root/app.yml /root/yaml/;
 fi
