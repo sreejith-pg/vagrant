@@ -122,7 +122,7 @@ then
   echo "=====================================================================" > /root/kubernetes_commands;
   echo "Execute below command starting with \"kubeadm join\" in worker nodes" >> /root/kubernetes_commands;
   echo "=====================================================================" >> /root/kubernetes_commands;
- # kubeadm init --apiserver-advertise-address=192.168.56.23 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
+  # kubeadm init --apiserver-advertise-address=192.168.56.23 --pod-network-cidr=192.168.0.1/16 >> /root/kubernetes_commands;
   kubeadm init --apiserver-advertise-address=192.168.56.23 --pod-network-cidr=172.16.0.1/16 >> /root/kubernetes_commands;
   mkdir -p $HOME/.kube;
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config;
@@ -140,6 +140,8 @@ then
   sshpass -p sreejith scp -o "StrictHostKeyChecking no" /root/kube_join.sh root@k8snode2:/tmp/; 
   sshpass -p sreejith ssh root@k8snode2 "/bin/bash /tmp/kube_join.sh";
   sleep 60;
+
+  # Install haproxy ingress-controller
   export PATH="/usr/local/bin:$PATH";
   curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3;
   chmod 700 get_helm.sh;
@@ -147,6 +149,14 @@ then
   /usr/local/bin/helm repo add haproxytech https://haproxytech.github.io/helm-charts;
   /usr/local/bin/helm repo update;
   /usr/local/bin/helm install haproxy-ingress haproxytech/kubernetes-ingress --create-namespace --namespace ingress-controller --set controller.service.nodePorts.http=30080 --set controller.service.nodePorts.https=30443 --set controller.service.nodePorts.stat=30000;
-  echo "source <(kubectl completion bash)" >> /home/sreejith/.bashrc;
-  chown -R sreejith:sreejith /home/sreejith;
+
+  # Install haproxy load balancer
+  yum install -y haproxy;
+  mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg-`date +%Y%m%d`; 
+  mv haproxy.cfg /etc/haproxy/haproxy.cfg;
+  systemctl enable --now haproxy;
+
+  # Create dummy YAML files
+  mkdir /root/yml;
+  mv app.yml /root/yml/;
 fi
