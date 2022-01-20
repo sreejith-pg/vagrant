@@ -1,37 +1,6 @@
 #!/bin/bash
 set -e
 
-# Add Lab hosts
-#cat <<EOT >> /etc/hosts
-#192.168.56.11   cent7srv1
-#192.168.56.12   cent7srv2
-#192.168.56.13   cent7srv3
-#192.168.56.14   cent7srv4
-#192.168.56.15   cent7srv5
-#
-#192.168.56.21   k8snode1
-#192.168.56.22   k8snode2 
-#192.168.56.23   k8smaster1
-#
-#192.168.56.31   cent8srv1
-#192.168.56.32   cent8srv2
-#192.168.56.33   cent8srv3
-#192.168.56.34   cent8srv4
-#192.168.56.35   cent8srv5
-#
-#192.168.56.41   ubu16srv1
-#192.168.56.42   ubu16srv2
-#192.168.56.43   ubu16srv3
-#192.168.56.44   ubu16srv4
-#192.168.56.45   ubu16srv5
-#
-#192.168.56.51   ubu18srv1
-#192.168.56.52   ubu18srv2
-#192.168.56.53   ubu18srv3
-#192.168.56.54   ubu18srv4
-#192.168.56.55   ubu18srv5
-#EOT
-
 # Allow password authentication in SSH
 sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'  /etc/ssh/sshd_config;
 /bin/systemctl restart sshd;
