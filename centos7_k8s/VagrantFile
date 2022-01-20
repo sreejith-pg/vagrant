@@ -20,6 +20,8 @@ Vagrant.configure("2") do |config|
 		node.vm.hostname = "k8snode#{i}"
 		node.vm.network :private_network, ip: IP_NW + "#{NODE_IP_START + i}"
 		node.vm.network "forwarded_port", guest: 22, host: "#{2720 + i}"
+		config.vm.provision "file", source: "./hosts", destination: "/tmp/hosts"
+	    config.vm.provision "shell", inline: "mv /tmp/hosts /etc/hosts" 
 		node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh" do |s|
 			s.args = ["eth1"]
 		end
@@ -42,6 +44,8 @@ Vagrant.configure("2") do |config|
 	config.vm.provision "shell", inline: "mv /tmp/haproxy.cfg /root/haproxy.cfg"
 	config.vm.provision "file", source: "./app.yml", destination: "/tmp/app.yml"
 	config.vm.provision "shell", inline: "mv /tmp/app.yml /root/app.yml"
+	config.vm.provision "file", source: "./hosts", destination: "/tmp/hosts"
+	config.vm.provision "shell", inline: "mv /tmp/hosts /etc/hosts"
 	node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh" do |s|
 		s.args = ["eth1"]
 	end	  
