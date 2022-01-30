@@ -4,37 +4,6 @@ IFNAME=$1
 ADDRESS="$(ip -4 addr show $IFNAME | grep "inet" | head -1 |awk '{print $2}' | cut -d/ -f1)"
 sed -e "s/^.*${HOSTNAME}.*/${ADDRESS} ${HOSTNAME} ${HOSTNAME}.local/" -i /etc/hosts
 
-# Add Lab hosts
-cat <<EOT >> /etc/hosts
-192.168.56.11   cent7srv1
-192.168.56.12   cent7srv2
-192.168.56.13   cent7srv3
-192.168.56.14   cent7srv4
-192.168.56.15   cent7srv5
-
-192.168.56.21   k8snode1
-192.168.56.22   k8snode2 
-192.168.56.23   k8smaster1
-
-192.168.56.31   cent8srv1
-192.168.56.32   cent8srv2
-192.168.56.33   cent8srv3
-192.168.56.34   cent8srv4
-192.168.56.35   cent8srv5
-
-192.168.56.21   ubu16srv1
-192.168.56.22   ubu16srv2
-192.168.56.23   ubu16srv3
-192.168.56.24   ubu16srv4
-192.168.56.25   ubu16srv5
-
-192.168.56.41   ubu18srv1
-192.168.56.42   ubu18srv2
-192.168.56.43   ubu18srv3
-192.168.56.44   ubu18srv4
-192.168.56.45   ubu18srv5
-EOT
-
 # Allow password authentication in SSH
 sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'  /etc/ssh/sshd_config
 /bin/systemctl restart sshd
