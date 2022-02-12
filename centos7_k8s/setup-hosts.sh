@@ -128,4 +128,11 @@ then
   # Create dummy YAML files for example.com ingress
   mkdir /root/yaml;
   mv /root/app.yml /root/yaml/;
+
+  # Build Argo-CD
+  mv /tmp/argo-cd_3.33.5.tar /root;
+  cd /root; 
+  tar -xvzf argo-cd_3.33.5.tar;
+  cd argo-cd;
+  /usr/local/bin/helm install argo-cd -n argo-cd --create-namespace -f values.yml;
 fi
