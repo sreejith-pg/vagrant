@@ -29,6 +29,13 @@ yum update -y;
 # Install packages
 yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass telnet curl;
 
+# K8S pre-requisites
+swapoff -a;
+sed -i '/swap/d' /etc/fstab;
+modprobe br_netfilter;
+sysctl --system;
+systemctl disable --now firewalld;
+
 # Configure Docker Repository
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo;
 
@@ -37,26 +44,11 @@ yum update -y &&  yum install -y docker-ce docker-ce-cli containerd.io;
 
 # Docker Config files
 mkdir -p /etc/systemd/system/docker.service.d;
-cat > /etc/systemd/system/docker.service.d/override.conf <<EOF
-[Service]
-ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd
-EOF
+mv /tmp/override.conf /etc/systemd/system/docker.service.d/override.conf
 
 systemctl daemon-reload;
-systemctl restart docker;
-systemctl enable docker;
-modprobe br_netfilter;
+systemctl enable --now docker;
 
-# K8S pre-requisites
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
-net.ipv6.conf.all.disable_ipv6 = 1
-net.ipv6.conf.default.disable_ipv6 = 1
-EOF
-sysctl --system;
-systemctl disable --now firewalld;
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -73,8 +65,6 @@ yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes;
 systemctl enable --now kubelet;
 systemctl daemon-reload;
 systemctl restart kubelet;
-swapoff -a;
-sed -i '/swap/d' /etc/fstab;
 
 # K8S Master
 if [ `/sbin/ifconfig -a | grep "192.168.56" | awk '{print $2}'` == "192.168.56.23" ]
