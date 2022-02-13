@@ -46,6 +46,9 @@ Vagrant.configure("2") do |config|
 	config.vm.provision "shell", inline: "mv /tmp/app.yml /root/app.yml"
 	config.vm.provision "file", source: "./hosts", destination: "/tmp/hosts"
 	config.vm.provision "shell", inline: "mv /tmp/hosts /etc/hosts"
+	config.vm.provision "file", source: "./k8s.conf", destination: "/tmp/k8s.conf"
+	config.vm.provision "shell", inline: "mv /tmp/k8s.conf /etc/sysctl.d/k8s.conf"
+	config.vm.provision "file", source: "./override.conf", destination: "/tmp/override.conf"
 	config.vm.provision "file", source: "./argo-cd_3.33.5.tar", destination: "/tmp/argo-cd_3.33.5.tar"
 	node.vm.provision "setup-hosts", :type => "shell", :path => "setup-hosts.sh" do |s|
 		s.args = ["eth1"]
