@@ -36,22 +36,13 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 yum update -y &&  yum install -y docker-ce docker-ce-cli containerd.io;
 
 # Docker Config files
-mkdir /etc/docker;
-cat > /etc/docker/daemon.json <<EOF
-  {
-    "exec-opt": ["native.cgroupdriver=systemd"],
-    "log-driver": "json-file",
-    "log-opts": {
-      "max-size": "100m"
-    },
-    "storage-driver": "overlay2",
-    "storage-opts": [
-      "overlay2.override_kernel_check=true"
-    ]
-  }
+mkdir -p /etc/systemd/system/docker.service.d;
+cat > /etc/systemd/system/docker.service.d/override.conf <<EOF
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd
 EOF
 
-mkdir -p /etc/systemd/system/docker.service.d;
 systemctl daemon-reload;
 systemctl restart docker;
 systemctl enable docker;
