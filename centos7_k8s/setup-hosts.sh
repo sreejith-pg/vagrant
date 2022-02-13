@@ -109,9 +109,12 @@ then
   mv /root/app.yml /root/yaml/;
 
   # Build Argo-CD
-  mv /tmp/argo-cd_3.33.5.tar /root;
+  mv /tmp/argocd-3.33.5.tar /root;
   cd /root; 
-  tar -xvzf argo-cd_3.33.5.tar;
+  tar -xvzf argocd-3.33.5.tar;
   cd argo-cd;
-  /usr/local/bin/helm install argo-cd -n argo-cd --create-namespace -f values.yml;
+  /usr/local/bin/helm repo add redis-ha https://dandydeveloper.github.io/charts;
+  /usr/local/bin/helm dependency build;
+  /usr/local/bin/helm install -n argo-cd --create-namespace argo-cd . -f values.yaml;
+  kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > /root/argocd_admin_password;
 fi
