@@ -67,6 +67,10 @@ systemctl enable --now kubelet;
 # K8S Master
 if [ `/sbin/ifconfig -a | grep "192.168.56" | awk '{print $2}'` == "192.168.56.23" ]
 then
+  sleep 5;
+  containerd config default > /etc/containerd/config.toml;
+  systemctl restart containerd;
+  sleep 5;
   echo "=====================================================================" > /root/kubernetes_commands;
   echo "Execute below command starting with \"kubeadm join\" in worker nodes" >> /root/kubernetes_commands;
   echo "=====================================================================" >> /root/kubernetes_commands;
