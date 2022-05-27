@@ -27,7 +27,7 @@ chown -R sreejith:sreejith /home/sreejith;
 yum update -y;
 
 # Install packages
-yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass telnet curl;
+yum install -y vim net-tools bind-utils yum-utils device-mapper-persistent-data lvm2 git sshpass telnet curl gcc make perl kernel-devel;
 
 # K8S pre-requisites
 swapoff -a;
