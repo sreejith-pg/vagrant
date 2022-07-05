@@ -121,4 +121,14 @@ then
   /usr/local/bin/helm dependency build;
   /usr/local/bin/helm install -n argo-cd --create-namespace argo-cd . -f values.yaml;
   kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > /root/argocd_admin_password;
+  
+  # Install google-chrome browser 
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm;
+  yum install -y google-chrome-stable_current_x86_64.rpm;
+  rm -rf google-chrome-stable_current_x86_64.rpm;
+
+  # For google-chrome browser
+  echo "export QT_X11_NO_MITSHM=1" >> /root/.bash_profile;
+  echo "export _X11_NO_MITSHM=1" >> /root/.bash_profile;
+  echo "export _MITSHM=0" >> /root/.bash_profile;
 fi
