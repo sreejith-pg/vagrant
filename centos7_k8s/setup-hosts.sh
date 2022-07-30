@@ -113,19 +113,12 @@ then
   mv /root/app.yml /root/yaml/;
 
   # Build Argo-CD
-  mv /tmp/argocd-3.33.5.tar /root;
-  cd /root; 
-  tar -xvzf argocd-3.33.5.tar;
-  cd argo-cd;
-  /usr/local/bin/helm repo add redis-ha https://dandydeveloper.github.io/charts;
-  /usr/local/bin/helm dependency build;
-  /usr/local/bin/helm install -n argo-cd --create-namespace argo-cd . -f values.yaml;
-  kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > /root/argocd_admin_password;
+  /usr/local/bin/helm install argo-cd argo-cd/argo-cd -n argo-cd --create-namespace --set server.ingress.enabled=true --set server.extraArgs={--insecure} --set server.ingress.annotations="{'kubernetes\.io\/ingress\.class\:\ haproxy'}" --set server.ingress.hosts={argocd\.example\.com}
   
   # Install google-chrome browser 
-  wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm;
-  yum install -y google-chrome-stable_current_x86_64.rpm;
-  rm -rf google-chrome-stable_current_x86_64.rpm;
+  #wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm;
+  #yum install -y google-chrome-stable_current_x86_64.rpm;
+  #rm -rf google-chrome-stable_current_x86_64.rpm;
 
   # For google-chrome browser
   echo "export QT_X11_NO_MITSHM=1" >> /root/.bash_profile;
