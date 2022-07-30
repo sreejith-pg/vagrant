@@ -114,7 +114,6 @@ then
 
   # Build Argo-CD
   /usr/local/bin/helm repo add argo-cd https://argoproj.github.io/argo-helm;
-  /usr/local/bin/helm dependency build
   /usr/local/bin/helm install argo-cd argo-cd/argo-cd -n argo-cd --create-namespace --set server.ingress.enabled=true --set server.extraArgs={--insecure} --set server.ingress.annotations="{'kubernetes\.io\/ingress\.class\:\ haproxy'}" --set server.ingress.hosts={argocd\.example\.com}
   
   # Install google-chrome browser 
