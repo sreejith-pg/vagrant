@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"C:/Users/nbpanampsr/OneDrive - NESTLE/Documents/Git/Github/vagrant/centos7_k8s","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
