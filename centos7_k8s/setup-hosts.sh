@@ -61,7 +61,7 @@ exclude=kubelet kubeadm kubectl
 EOF
 setenforce 0;
 sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config;
-yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes;
+yum install -y kubelet-1.23.15-0 kubeadm-1.23.15-0 kubectl-1.23.15-0 --disableexcludes=kubernetes;
 systemctl enable --now kubelet;
 
 containerd config default > /etc/containerd/config.toml;
